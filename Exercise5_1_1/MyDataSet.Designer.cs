@@ -1725,6 +1725,8 @@ namespace Exercise5_1_1 {
             
             private global::System.Data.DataColumn columnAmount;
             
+            private global::System.Data.DataColumn columnAccountDescription;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public InvoiceLineItemsDataTable() {
@@ -1800,6 +1802,14 @@ namespace Exercise5_1_1 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn AccountDescriptionColumn {
+                get {
+                    return this.columnAccountDescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1835,14 +1845,15 @@ namespace Exercise5_1_1 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public InvoiceLineItemsRow AddInvoiceLineItemsRow(InvoicesRow parentInvoicesRowByFK_InvoiceLineItems_Invoices, short InvoiceSequence, GLAccountsRow parentGLAccountsRowByFK_InvoiceLineItems_GLAccounts, string Description, decimal Amount) {
+            public InvoiceLineItemsRow AddInvoiceLineItemsRow(InvoicesRow parentInvoicesRowByFK_InvoiceLineItems_Invoices, short InvoiceSequence, GLAccountsRow parentGLAccountsRowByFK_InvoiceLineItems_GLAccounts, string Description, decimal Amount, string AccountDescription) {
                 InvoiceLineItemsRow rowInvoiceLineItemsRow = ((InvoiceLineItemsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         InvoiceSequence,
                         null,
                         Description,
-                        Amount};
+                        Amount,
+                        AccountDescription};
                 if ((parentInvoicesRowByFK_InvoiceLineItems_Invoices != null)) {
                     columnValuesArray[0] = parentInvoicesRowByFK_InvoiceLineItems_Invoices[0];
                 }
@@ -1884,6 +1895,7 @@ namespace Exercise5_1_1 {
                 this.columnAccountNo = base.Columns["AccountNo"];
                 this.columnDescription = base.Columns["Description"];
                 this.columnAmount = base.Columns["Amount"];
+                this.columnAccountDescription = base.Columns["AccountDescription"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1899,6 +1911,8 @@ namespace Exercise5_1_1 {
                 base.Columns.Add(this.columnDescription);
                 this.columnAmount = new global::System.Data.DataColumn("Amount", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAmount);
+                this.columnAccountDescription = new global::System.Data.DataColumn("AccountDescription", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAccountDescription);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnInvoiceID,
                                 this.columnInvoiceSequence}, true));
@@ -1908,6 +1922,8 @@ namespace Exercise5_1_1 {
                 this.columnDescription.AllowDBNull = false;
                 this.columnDescription.MaxLength = 100;
                 this.columnAmount.AllowDBNull = false;
+                this.columnAccountDescription.AllowDBNull = false;
+                this.columnAccountDescription.MaxLength = 50;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2446,6 +2462,17 @@ namespace Exercise5_1_1 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string AccountDescription {
+                get {
+                    return ((string)(this[this.tableInvoiceLineItems.AccountDescriptionColumn]));
+                }
+                set {
+                    this[this.tableInvoiceLineItems.AccountDescriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public GLAccountsRow GLAccountsRow {
                 get {
                     return ((GLAccountsRow)(this.GetParentRow(this.Table.ParentRelations["FK_InvoiceLineItems_GLAccounts"])));
@@ -2765,32 +2792,6 @@ namespace Exercise5_1_1.MyDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("AccountNo", "AccountNo");
             tableMapping.ColumnMappings.Add("Description", "Description");
             this._adapter.TableMappings.Add(tableMapping);
-            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[GLAccounts] WHERE (([AccountNo] = @Original_AccountNo) AND ([D" +
-                "escription] = @Original_Description))";
-            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AccountNo", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AccountNo", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[GLAccounts] ([AccountNo], [Description]) VALUES (@AccountNo, @" +
-                "Description);\r\nSELECT AccountNo, Description FROM GLAccounts WHERE (AccountNo = " +
-                "@AccountNo)";
-            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AccountNo", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AccountNo", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[GLAccounts] SET [AccountNo] = @AccountNo, [Description] = @Descript" +
-                "ion WHERE (([AccountNo] = @Original_AccountNo) AND ([Description] = @Original_De" +
-                "scription));\r\nSELECT AccountNo, Description FROM GLAccounts WHERE (AccountNo = @" +
-                "AccountNo)";
-            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AccountNo", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AccountNo", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AccountNo", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AccountNo", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2832,134 +2833,6 @@ namespace Exercise5_1_1.MyDataSetTableAdapters {
             MyDataSet.GLAccountsDataTable dataTable = new MyDataSet.GLAccountsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(MyDataSet.GLAccountsDataTable dataTable) {
-            return this.Adapter.Update(dataTable);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(MyDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "GLAccounts");
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow dataRow) {
-            return this.Adapter.Update(new global::System.Data.DataRow[] {
-                        dataRow});
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow[] dataRows) {
-            return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_AccountNo, string Original_Description) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_AccountNo));
-            if ((Original_Description == null)) {
-                throw new global::System.ArgumentNullException("Original_Description");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_Description));
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
-            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.DeleteCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.DeleteCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int AccountNo, string Description) {
-            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(AccountNo));
-            if ((Description == null)) {
-                throw new global::System.ArgumentNullException("Description");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(Description));
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int AccountNo, string Description, int Original_AccountNo, string Original_Description) {
-            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(AccountNo));
-            if ((Description == null)) {
-                throw new global::System.ArgumentNullException("Description");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(Description));
-            }
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Original_AccountNo));
-            if ((Original_Description == null)) {
-                throw new global::System.ArgumentNullException("Original_Description");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Original_Description));
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
-            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.UpdateCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.UpdateCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Description, int Original_AccountNo, string Original_Description) {
-            return this.Update(Original_AccountNo, Description, Original_AccountNo, Original_Description);
         }
     }
     
@@ -3147,19 +3020,28 @@ SELECT VendorID, ZipCode, Name, Address1, Address2, City, State FROM Vendors WHE
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT VendorID, ZipCode, Name, Address1, Address2, City, State FROM dbo.Vendors";
+            this._commandCollection[0].CommandText = "SELECT VendorID, ZipCode, Name, Address1, Address2, City, State FROM dbo.Vendors\r" +
+                "\nWHERE VendorID = @VendorID";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VendorID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "VendorID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT Address1, Address2, City, Name, State, VendorID, ZipCode FROM Vendors WHER" +
+                "E (Name LIKE @name) ORDER BY Name";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@name", global::System.Data.SqlDbType.VarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(MyDataSet.VendorsDataTable dataTable) {
+        public virtual int FillByVendorID(MyDataSet.VendorsDataTable dataTable, int VendorID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(VendorID));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -3171,8 +3053,45 @@ SELECT VendorID, ZipCode, Name, Address1, Address2, City, State FROM Vendors WHE
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual MyDataSet.VendorsDataTable GetData() {
+        public virtual MyDataSet.VendorsDataTable GetDataByVendorID(int VendorID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(VendorID));
+            MyDataSet.VendorsDataTable dataTable = new MyDataSet.VendorsDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByVendorName(MyDataSet.VendorsDataTable dataTable, string name) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((name == null)) {
+                throw new global::System.ArgumentNullException("name");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(name));
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual MyDataSet.VendorsDataTable GetDataByVendorName(string name) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((name == null)) {
+                throw new global::System.ArgumentNullException("name");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(name));
+            }
             MyDataSet.VendorsDataTable dataTable = new MyDataSet.VendorsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -3554,23 +3473,6 @@ SELECT VendorID, ZipCode, Name, Address1, Address2, City, State FROM Vendors WHE
             tableMapping.ColumnMappings.Add("TermsID", "TermsID");
             tableMapping.ColumnMappings.Add("Description", "Description");
             this._adapter.TableMappings.Add(tableMapping);
-            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Terms] WHERE (([TermsID] = @Original_TermsID) AND ([Descriptio" +
-                "n] = @Original_Description))";
-            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_TermsID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TermsID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Terms] SET [Description] = @Description WHERE (([TermsID] = @Origin" +
-                "al_TermsID) AND ([Description] = @Original_Description));\r\nSELECT TermsID, Descr" +
-                "iption FROM Terms WHERE (TermsID = @TermsID)";
-            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_TermsID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TermsID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TermsID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "TermsID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3612,106 +3514,6 @@ SELECT VendorID, ZipCode, Name, Address1, Address2, City, State FROM Vendors WHE
             MyDataSet.TermsDataTable dataTable = new MyDataSet.TermsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(MyDataSet.TermsDataTable dataTable) {
-            return this.Adapter.Update(dataTable);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(MyDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "Terms");
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow dataRow) {
-            return this.Adapter.Update(new global::System.Data.DataRow[] {
-                        dataRow});
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow[] dataRows) {
-            return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_TermsID, string Original_Description) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_TermsID));
-            if ((Original_Description == null)) {
-                throw new global::System.ArgumentNullException("Original_Description");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_Description));
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
-            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.DeleteCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.DeleteCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Description, int Original_TermsID, string Original_Description, int TermsID) {
-            if ((Description == null)) {
-                throw new global::System.ArgumentNullException("Description");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(Description));
-            }
-            this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(Original_TermsID));
-            if ((Original_Description == null)) {
-                throw new global::System.ArgumentNullException("Original_Description");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(Original_Description));
-            }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(TermsID));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
-            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.UpdateCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.UpdateCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Description, int Original_TermsID, string Original_Description) {
-            return this.Update(Description, Original_TermsID, Original_Description, Original_TermsID);
         }
     }
     
@@ -3857,8 +3659,9 @@ SELECT VendorID, ZipCode, Name, Address1, Address2, City, State FROM Vendors WHE
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DueDate", global::System.Data.SqlDbType.SmallDateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DueDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[Invoices] ([VendorID], [InvoiceNumber], [InvoiceDate], [InvoiceTotal], [TermsID], [DueDate]) VALUES (@VendorID, @InvoiceNumber, @InvoiceDate, @InvoiceTotal, @TermsID, @DueDate);
-SELECT InvoiceID, VendorID, InvoiceNumber, InvoiceDate, InvoiceTotal, TermsID, DueDate FROM Invoices WHERE (InvoiceID = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Invoices] ([VendorID], [InvoiceNumber], [InvoiceDate], [Invoic" +
+                "eTotal], [TermsID], [DueDate]) VALUES (@VendorID, @InvoiceNumber, @InvoiceDate, " +
+                "@InvoiceTotal, @TermsID, @DueDate)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VendorID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VendorID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@InvoiceNumber", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceNumber", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -3868,8 +3671,7 @@ SELECT InvoiceID, VendorID, InvoiceNumber, InvoiceDate, InvoiceTotal, TermsID, D
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DueDate", global::System.Data.SqlDbType.SmallDateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DueDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Invoices] SET [VendorID] = @VendorID, [InvoiceNumber] = @InvoiceNumber, [InvoiceDate] = @InvoiceDate, [InvoiceTotal] = @InvoiceTotal, [TermsID] = @TermsID, [DueDate] = @DueDate WHERE (([InvoiceID] = @Original_InvoiceID) AND ([VendorID] = @Original_VendorID) AND ([InvoiceNumber] = @Original_InvoiceNumber) AND ([InvoiceDate] = @Original_InvoiceDate) AND ([InvoiceTotal] = @Original_InvoiceTotal) AND ([TermsID] = @Original_TermsID) AND ([DueDate] = @Original_DueDate));
-SELECT InvoiceID, VendorID, InvoiceNumber, InvoiceDate, InvoiceTotal, TermsID, DueDate FROM Invoices WHERE (InvoiceID = @InvoiceID)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Invoices] SET [VendorID] = @VendorID, [InvoiceNumber] = @InvoiceNumber, [InvoiceDate] = @InvoiceDate, [InvoiceTotal] = @InvoiceTotal, [TermsID] = @TermsID, [DueDate] = @DueDate WHERE (([InvoiceID] = @Original_InvoiceID) AND ([VendorID] = @Original_VendorID) AND ([InvoiceNumber] = @Original_InvoiceNumber) AND ([InvoiceDate] = @Original_InvoiceDate) AND ([InvoiceTotal] = @Original_InvoiceTotal) AND ([TermsID] = @Original_TermsID) AND ([DueDate] = @Original_DueDate))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VendorID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VendorID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@InvoiceNumber", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceNumber", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -3884,7 +3686,6 @@ SELECT InvoiceID, VendorID, InvoiceNumber, InvoiceDate, InvoiceTotal, TermsID, D
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_InvoiceTotal", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceTotal", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_TermsID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TermsID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DueDate", global::System.Data.SqlDbType.SmallDateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DueDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@InvoiceID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4027,7 +3828,7 @@ SELECT InvoiceID, VendorID, InvoiceNumber, InvoiceDate, InvoiceTotal, TermsID, D
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int VendorID, string InvoiceNumber, System.DateTime InvoiceDate, decimal InvoiceTotal, int TermsID, System.DateTime DueDate, int Original_InvoiceID, int Original_VendorID, string Original_InvoiceNumber, System.DateTime Original_InvoiceDate, decimal Original_InvoiceTotal, int Original_TermsID, System.DateTime Original_DueDate, int InvoiceID) {
+        public virtual int Update(int VendorID, string InvoiceNumber, System.DateTime InvoiceDate, decimal InvoiceTotal, int TermsID, System.DateTime DueDate, int Original_InvoiceID, int Original_VendorID, string Original_InvoiceNumber, System.DateTime Original_InvoiceDate, decimal Original_InvoiceTotal, int Original_TermsID, System.DateTime Original_DueDate) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(VendorID));
             if ((InvoiceNumber == null)) {
                 throw new global::System.ArgumentNullException("InvoiceNumber");
@@ -4051,7 +3852,6 @@ SELECT InvoiceID, VendorID, InvoiceNumber, InvoiceDate, InvoiceTotal, TermsID, D
             this.Adapter.UpdateCommand.Parameters[10].Value = ((decimal)(Original_InvoiceTotal));
             this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(Original_TermsID));
             this.Adapter.UpdateCommand.Parameters[12].Value = ((System.DateTime)(Original_DueDate));
-            this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(InvoiceID));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -4066,14 +3866,6 @@ SELECT InvoiceID, VendorID, InvoiceNumber, InvoiceDate, InvoiceTotal, TermsID, D
                     this.Adapter.UpdateCommand.Connection.Close();
                 }
             }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int VendorID, string InvoiceNumber, System.DateTime InvoiceDate, decimal InvoiceTotal, int TermsID, System.DateTime DueDate, int Original_InvoiceID, int Original_VendorID, string Original_InvoiceNumber, System.DateTime Original_InvoiceDate, decimal Original_InvoiceTotal, int Original_TermsID, System.DateTime Original_DueDate) {
-            return this.Update(VendorID, InvoiceNumber, InvoiceDate, InvoiceTotal, TermsID, DueDate, Original_InvoiceID, Original_VendorID, Original_InvoiceNumber, Original_InvoiceDate, Original_InvoiceTotal, Original_TermsID, Original_DueDate, Original_InvoiceID);
         }
     }
     
@@ -4203,44 +3995,8 @@ SELECT InvoiceID, VendorID, InvoiceNumber, InvoiceDate, InvoiceTotal, TermsID, D
             tableMapping.ColumnMappings.Add("AccountNo", "AccountNo");
             tableMapping.ColumnMappings.Add("Description", "Description");
             tableMapping.ColumnMappings.Add("Amount", "Amount");
+            tableMapping.ColumnMappings.Add("AccountDescription", "AccountDescription");
             this._adapter.TableMappings.Add(tableMapping);
-            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[InvoiceLineItems] WHERE (([InvoiceID] = @Original_InvoiceID) A" +
-                "ND ([InvoiceSequence] = @Original_InvoiceSequence) AND ([AccountNo] = @Original_" +
-                "AccountNo) AND ([Description] = @Original_Description) AND ([Amount] = @Original" +
-                "_Amount))";
-            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_InvoiceID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_InvoiceSequence", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceSequence", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AccountNo", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AccountNo", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Amount", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Amount", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[InvoiceLineItems] ([InvoiceID], [InvoiceSequence], [AccountNo], [Description], [Amount]) VALUES (@InvoiceID, @InvoiceSequence, @AccountNo, @Description, @Amount);
-SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLineItems WHERE (InvoiceID = @InvoiceID) AND (InvoiceSequence = @InvoiceSequence)";
-            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@InvoiceID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@InvoiceSequence", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceSequence", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AccountNo", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AccountNo", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Amount", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Amount", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[InvoiceLineItems] SET [InvoiceID] = @InvoiceID, [InvoiceSequence] = @InvoiceSequence, [AccountNo] = @AccountNo, [Description] = @Description, [Amount] = @Amount WHERE (([InvoiceID] = @Original_InvoiceID) AND ([InvoiceSequence] = @Original_InvoiceSequence) AND ([AccountNo] = @Original_AccountNo) AND ([Description] = @Original_Description) AND ([Amount] = @Original_Amount));
-SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLineItems WHERE (InvoiceID = @InvoiceID) AND (InvoiceSequence = @InvoiceSequence)";
-            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@InvoiceID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@InvoiceSequence", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceSequence", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AccountNo", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AccountNo", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Amount", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Amount", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_InvoiceID", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_InvoiceSequence", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "InvoiceSequence", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AccountNo", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AccountNo", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Description", global::System.Data.SqlDbType.VarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Description", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Amount", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Amount", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4256,8 +4012,9 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM dbo.Invoic" +
-                "eLineItems";
+            this._commandCollection[0].CommandText = @"SELECT        InvoiceLineItems.InvoiceID, InvoiceLineItems.InvoiceSequence, InvoiceLineItems.AccountNo, InvoiceLineItems.Description, InvoiceLineItems.Amount, GLAccounts.Description AS AccountDescription
+FROM            InvoiceLineItems INNER JOIN
+                         GLAccounts ON InvoiceLineItems.AccountNo = GLAccounts.AccountNo";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -4284,146 +4041,6 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(MyDataSet.InvoiceLineItemsDataTable dataTable) {
-            return this.Adapter.Update(dataTable);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(MyDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "InvoiceLineItems");
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow dataRow) {
-            return this.Adapter.Update(new global::System.Data.DataRow[] {
-                        dataRow});
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow[] dataRows) {
-            return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_InvoiceID, short Original_InvoiceSequence, int Original_AccountNo, string Original_Description, decimal Original_Amount) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_InvoiceID));
-            this.Adapter.DeleteCommand.Parameters[1].Value = ((short)(Original_InvoiceSequence));
-            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_AccountNo));
-            if ((Original_Description == null)) {
-                throw new global::System.ArgumentNullException("Original_Description");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[3].Value = ((string)(Original_Description));
-            }
-            this.Adapter.DeleteCommand.Parameters[4].Value = ((decimal)(Original_Amount));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
-            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.DeleteCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.DeleteCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int InvoiceID, short InvoiceSequence, int AccountNo, string Description, decimal Amount) {
-            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(InvoiceID));
-            this.Adapter.InsertCommand.Parameters[1].Value = ((short)(InvoiceSequence));
-            this.Adapter.InsertCommand.Parameters[2].Value = ((int)(AccountNo));
-            if ((Description == null)) {
-                throw new global::System.ArgumentNullException("Description");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(Description));
-            }
-            this.Adapter.InsertCommand.Parameters[4].Value = ((decimal)(Amount));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int InvoiceID, short InvoiceSequence, int AccountNo, string Description, decimal Amount, int Original_InvoiceID, short Original_InvoiceSequence, int Original_AccountNo, string Original_Description, decimal Original_Amount) {
-            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(InvoiceID));
-            this.Adapter.UpdateCommand.Parameters[1].Value = ((short)(InvoiceSequence));
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(AccountNo));
-            if ((Description == null)) {
-                throw new global::System.ArgumentNullException("Description");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Description));
-            }
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((decimal)(Amount));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_InvoiceID));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((short)(Original_InvoiceSequence));
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_AccountNo));
-            if ((Original_Description == null)) {
-                throw new global::System.ArgumentNullException("Original_Description");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_Description));
-            }
-            this.Adapter.UpdateCommand.Parameters[9].Value = ((decimal)(Original_Amount));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
-            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.UpdateCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.UpdateCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int AccountNo, string Description, decimal Amount, int Original_InvoiceID, short Original_InvoiceSequence, int Original_AccountNo, string Original_Description, decimal Original_Amount) {
-            return this.Update(Original_InvoiceID, Original_InvoiceSequence, AccountNo, Description, Amount, Original_InvoiceID, Original_InvoiceSequence, Original_AccountNo, Original_Description, Original_Amount);
-        }
     }
     
     /// <summary>
@@ -4438,15 +4055,9 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
         
         private UpdateOrderOption _updateOrder;
         
-        private GLAccountsTableAdapter _gLAccountsTableAdapter;
-        
         private VendorsTableAdapter _vendorsTableAdapter;
         
-        private TermsTableAdapter _termsTableAdapter;
-        
         private InvoicesTableAdapter _invoicesTableAdapter;
-        
-        private InvoiceLineItemsTableAdapter _invoiceLineItemsTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -4460,20 +4071,6 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
             }
             set {
                 this._updateOrder = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
-            "a", "System.Drawing.Design.UITypeEditor")]
-        public GLAccountsTableAdapter GLAccountsTableAdapter {
-            get {
-                return this._gLAccountsTableAdapter;
-            }
-            set {
-                this._gLAccountsTableAdapter = value;
             }
         }
         
@@ -4496,40 +4093,12 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
-        public TermsTableAdapter TermsTableAdapter {
-            get {
-                return this._termsTableAdapter;
-            }
-            set {
-                this._termsTableAdapter = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
-            "a", "System.Drawing.Design.UITypeEditor")]
         public InvoicesTableAdapter InvoicesTableAdapter {
             get {
                 return this._invoicesTableAdapter;
             }
             set {
                 this._invoicesTableAdapter = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
-            "a", "System.Drawing.Design.UITypeEditor")]
-        public InvoiceLineItemsTableAdapter InvoiceLineItemsTableAdapter {
-            get {
-                return this._invoiceLineItemsTableAdapter;
-            }
-            set {
-                this._invoiceLineItemsTableAdapter = value;
             }
         }
         
@@ -4552,25 +4121,13 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
                 if ((this._connection != null)) {
                     return this._connection;
                 }
-                if (((this._gLAccountsTableAdapter != null) 
-                            && (this._gLAccountsTableAdapter.Connection != null))) {
-                    return this._gLAccountsTableAdapter.Connection;
-                }
                 if (((this._vendorsTableAdapter != null) 
                             && (this._vendorsTableAdapter.Connection != null))) {
                     return this._vendorsTableAdapter.Connection;
                 }
-                if (((this._termsTableAdapter != null) 
-                            && (this._termsTableAdapter.Connection != null))) {
-                    return this._termsTableAdapter.Connection;
-                }
                 if (((this._invoicesTableAdapter != null) 
                             && (this._invoicesTableAdapter.Connection != null))) {
                     return this._invoicesTableAdapter.Connection;
-                }
-                if (((this._invoiceLineItemsTableAdapter != null) 
-                            && (this._invoiceLineItemsTableAdapter.Connection != null))) {
-                    return this._invoiceLineItemsTableAdapter.Connection;
                 }
                 return null;
             }
@@ -4585,19 +4142,10 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
         public int TableAdapterInstanceCount {
             get {
                 int count = 0;
-                if ((this._gLAccountsTableAdapter != null)) {
-                    count = (count + 1);
-                }
                 if ((this._vendorsTableAdapter != null)) {
                     count = (count + 1);
                 }
-                if ((this._termsTableAdapter != null)) {
-                    count = (count + 1);
-                }
                 if ((this._invoicesTableAdapter != null)) {
-                    count = (count + 1);
-                }
-                if ((this._invoiceLineItemsTableAdapter != null)) {
                     count = (count + 1);
                 }
                 return count;
@@ -4620,39 +4168,12 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._termsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Terms.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._termsTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._gLAccountsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.GLAccounts.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._gLAccountsTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._invoicesTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.Invoices.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._invoicesTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._invoiceLineItemsTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.InvoiceLineItems.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._invoiceLineItemsTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -4674,35 +4195,11 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._termsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Terms.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._termsTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._gLAccountsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.GLAccounts.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._gLAccountsTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._invoicesTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.Invoices.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._invoicesTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._invoiceLineItemsTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.InvoiceLineItems.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._invoiceLineItemsTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -4716,35 +4213,11 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private int UpdateDeletedRows(MyDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._invoiceLineItemsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.InvoiceLineItems.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._invoiceLineItemsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._invoicesTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.Invoices.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._invoicesTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._gLAccountsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.GLAccounts.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._gLAccountsTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._termsTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Terms.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._termsTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -4795,28 +4268,13 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
             if ((dataSet.HasChanges() == false)) {
                 return 0;
             }
-            if (((this._gLAccountsTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._gLAccountsTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
-                        "tring.");
-            }
             if (((this._vendorsTableAdapter != null) 
                         && (this.MatchTableAdapterConnection(this._vendorsTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
-            if (((this._termsTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._termsTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
-                        "tring.");
-            }
             if (((this._invoicesTableAdapter != null) 
                         && (this.MatchTableAdapterConnection(this._invoicesTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
-                        "tring.");
-            }
-            if (((this._invoiceLineItemsTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._invoiceLineItemsTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -4852,15 +4310,6 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
             try {
                 // ---- Prepare for update -----------
                 //
-                if ((this._gLAccountsTableAdapter != null)) {
-                    revertConnections.Add(this._gLAccountsTableAdapter, this._gLAccountsTableAdapter.Connection);
-                    this._gLAccountsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._gLAccountsTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._gLAccountsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._gLAccountsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._gLAccountsTableAdapter.Adapter);
-                    }
-                }
                 if ((this._vendorsTableAdapter != null)) {
                     revertConnections.Add(this._vendorsTableAdapter, this._vendorsTableAdapter.Connection);
                     this._vendorsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
@@ -4870,15 +4319,6 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
                         adaptersWithAcceptChangesDuringUpdate.Add(this._vendorsTableAdapter.Adapter);
                     }
                 }
-                if ((this._termsTableAdapter != null)) {
-                    revertConnections.Add(this._termsTableAdapter, this._termsTableAdapter.Connection);
-                    this._termsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._termsTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._termsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._termsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._termsTableAdapter.Adapter);
-                    }
-                }
                 if ((this._invoicesTableAdapter != null)) {
                     revertConnections.Add(this._invoicesTableAdapter, this._invoicesTableAdapter.Connection);
                     this._invoicesTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
@@ -4886,15 +4326,6 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
                     if (this._invoicesTableAdapter.Adapter.AcceptChangesDuringUpdate) {
                         this._invoicesTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
                         adaptersWithAcceptChangesDuringUpdate.Add(this._invoicesTableAdapter.Adapter);
-                    }
-                }
-                if ((this._invoiceLineItemsTableAdapter != null)) {
-                    revertConnections.Add(this._invoiceLineItemsTableAdapter, this._invoiceLineItemsTableAdapter.Connection);
-                    this._invoiceLineItemsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._invoiceLineItemsTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._invoiceLineItemsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._invoiceLineItemsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._invoiceLineItemsTableAdapter.Adapter);
                     }
                 }
                 // 
@@ -4955,25 +4386,13 @@ SELECT InvoiceID, InvoiceSequence, AccountNo, Description, Amount FROM InvoiceLi
                 if (workConnOpened) {
                     workConnection.Close();
                 }
-                if ((this._gLAccountsTableAdapter != null)) {
-                    this._gLAccountsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._gLAccountsTableAdapter]));
-                    this._gLAccountsTableAdapter.Transaction = null;
-                }
                 if ((this._vendorsTableAdapter != null)) {
                     this._vendorsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._vendorsTableAdapter]));
                     this._vendorsTableAdapter.Transaction = null;
                 }
-                if ((this._termsTableAdapter != null)) {
-                    this._termsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._termsTableAdapter]));
-                    this._termsTableAdapter.Transaction = null;
-                }
                 if ((this._invoicesTableAdapter != null)) {
                     this._invoicesTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._invoicesTableAdapter]));
                     this._invoicesTableAdapter.Transaction = null;
-                }
-                if ((this._invoiceLineItemsTableAdapter != null)) {
-                    this._invoiceLineItemsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._invoiceLineItemsTableAdapter]));
-                    this._invoiceLineItemsTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];
